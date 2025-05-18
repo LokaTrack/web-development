@@ -1,9 +1,15 @@
 import { Box, Grid, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { fetchTrackersList } from "../hooks/trackers";
-import { TrackersListProps } from "../props/trackers";
+import { TrackersListProps, TrackerLocation } from "../props/trackers";
 import TrackingList from "../components/tracking/tracking-list";
 import TrackingMap from "../components/tracking/tracking-map";
+import {
+  connectSocket,
+  disconnectSocket,
+  subscribeToTracker,
+  unsubscribeFromTracker,
+} from "../socket";
 
 export default function Tracking() {
   const [isLoading, setIsLoading] = useState(true);
@@ -25,6 +31,44 @@ export default function Tracking() {
     }
   }, [trackersList, selectedTrackerId]);
 
+  // Socket connection effect
+  useEffect(() => {
+    // Handler for location updates received via socket
+    const handleLocationUpdate = (
+      trackerId: string,
+      location: TrackerLocation,
+    ) => {
+      setTrackersList((currentList) =>
+        currentList.map((tracker) =>
+          tracker.trackerId === trackerId ? { ...tracker, location } : tracker,
+        ),
+      );
+    };
+
+    // Connect to socket
+    connectSocket(handleLocationUpdate);
+
+    // Cleanup: disconnect from socket when component unmounts
+    return () => {
+      disconnectSocket();
+    };
+  }, []);
+
+  // Subscribe to selected tracker
+  useEffect(() => {
+    // Only subscribe if we have a selected tracker
+    if (selectedTrackerId) {
+      // Unsubscribe from all trackers first (optional, depends on your backend implementation)
+      trackersList.forEach((tracker) => {
+        unsubscribeFromTracker(tracker.trackerId);
+      });
+
+      // Subscribe to the selected tracker
+      subscribeToTracker(selectedTrackerId);
+    }
+  }, [selectedTrackerId, trackersList]);
+
+  // Handle tracker selection
   function handleTrackerSelect(trackerId: string) {
     setSelectedTrackerId(trackerId);
   }

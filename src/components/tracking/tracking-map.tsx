@@ -5,7 +5,7 @@ import { Typography, CircularProgress } from "@mui/material";
 import { useEffect } from "react";
 import "leaflet/dist/leaflet.css";
 
-// This component will handle map recenter when the location changes
+// Handle map updates when the location changes
 function MapUpdater({ location }: { location: TrackerLocation }) {
   const map = useMap();
 
