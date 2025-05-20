@@ -1,6 +1,6 @@
 import { Box, Paper } from "@mui/material";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
-import { TrackerLocation } from "../../props/trackers";
+import { TrackerLocation } from "../../props/props";
 import { Typography, CircularProgress } from "@mui/material";
 import { useEffect } from "react";
 import "leaflet/dist/leaflet.css";

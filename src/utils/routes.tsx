@@ -31,8 +31,12 @@ const routes: RouteObject[] = [
   //   path: "/tracking2",
   //   element: <Tracking2 />,
   // },
+  // {
+  //   path: "/trackers",
+  //   element: <Trackers />,
+  // },
   {
-    path: "/trackers",
+    path: "/trackers/",
     element: <Trackers />,
   },
   {

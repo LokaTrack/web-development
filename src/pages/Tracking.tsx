@@ -1,7 +1,7 @@
 import { Box, Grid, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
-import { fetchTrackersList } from "../hooks/trackers";
-import { TrackersListProps, TrackerLocation } from "../props/trackers";
+import { fetchTrackerList } from "../hooks/hooks";
+import { TrackerListProps, TrackerLocation } from "../props/props";
 import TrackingList from "../components/tracking/tracking-list";
 import TrackingMap from "../components/tracking/tracking-map";
 import {
@@ -14,22 +14,22 @@ import {
 export default function Tracking() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [trackersList, setTrackersList] = useState<TrackersListProps[]>([]);
+  const [trackerList, setTrackerList] = useState<TrackerListProps[]>([]);
   const [selectedTrackerId, setSelectedTrackerId] = useState<string | null>(
     null,
   );
 
   // Fetch data
   useEffect(() => {
-    fetchTrackersList(setTrackersList, setIsLoading, setError);
+    fetchTrackerList(setTrackerList, setIsLoading, setError);
   }, []);
 
   // Set default selected tracker
   useEffect(() => {
-    if (trackersList.length > 0 && !selectedTrackerId) {
-      setSelectedTrackerId(trackersList[0].trackerId);
+    if (trackerList.length > 0 && !selectedTrackerId) {
+      setSelectedTrackerId(trackerList[0].trackerId);
     }
-  }, [trackersList, selectedTrackerId]);
+  }, [trackerList, selectedTrackerId]);
 
   // Socket connection effect
   useEffect(() => {
@@ -38,7 +38,7 @@ export default function Tracking() {
       trackerId: string,
       location: TrackerLocation,
     ) => {
-      setTrackersList((currentList) =>
+      setTrackerList((currentList) =>
         currentList.map((tracker) =>
           tracker.trackerId === trackerId ? { ...tracker, location } : tracker,
         ),
@@ -59,14 +59,14 @@ export default function Tracking() {
     // Only subscribe if we have a selected tracker
     if (selectedTrackerId) {
       // Unsubscribe from all trackers first (optional, depends on your backend implementation)
-      trackersList.forEach((tracker) => {
+      trackerList.forEach((tracker) => {
         unsubscribeFromTracker(tracker.trackerId);
       });
 
       // Subscribe to the selected tracker
       subscribeToTracker(selectedTrackerId);
     }
-  }, [selectedTrackerId, trackersList]);
+  }, [selectedTrackerId, trackerList]);
 
   // Handle tracker selection
   function handleTrackerSelect(trackerId: string) {
@@ -74,10 +74,10 @@ export default function Tracking() {
   }
 
   // Find the selected tracker's location
-  const selectedTracker = trackersList.find(
+  const selectedTracker = trackerList.find(
     (tracker) => tracker.trackerId === selectedTrackerId,
   );
-  const trackerLocation = selectedTracker?.location || null;
+  const trackerLocation = selectedTracker?.trackerData.location || null;
 
   return (
     <Box
@@ -86,6 +86,7 @@ export default function Tracking() {
         flexDirection: "column",
         height: "calc(100vh - 136px)", // Adjust height to leave space for header/footer
         overflow: "hidden", // Prevent scrolling in the main container
+        p: 3,
       }}
     >
       <Typography variant="h4" gutterBottom>
@@ -100,16 +101,16 @@ export default function Tracking() {
           overflow: "hidden", // Prevent scrolling in the Grid container
         }}
       >
-        <Grid size={4} sx={{ height: "100%", padding: "12px" }}>
+        <Grid size={4} sx={{ height: "100%", paddingTop: "12px" }}>
           <TrackingList
             isLoading={isLoading}
             error={error}
-            trackersList={trackersList}
+            trackerList={trackerList}
             selectedTrackerId={selectedTrackerId}
             onTrackerSelect={handleTrackerSelect}
           />
         </Grid>
-        <Grid size={8} sx={{ height: "100%", padding: "12px" }}>
+        <Grid size={8} sx={{ height: "100%", paddingTop: "12px" }}>
           <TrackingMap
             isLoading={isLoading}
             error={error}

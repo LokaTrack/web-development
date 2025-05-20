@@ -1,5 +1,5 @@
 import { io, Socket } from "socket.io-client";
-import { TrackerLocation } from "./props/trackers";
+import { TrackerLocation } from "./props/props";
 
 // Define the server URL - replace with your actual socket server URL
 const SOCKET_SERVER_URL = import.meta.env.VITE_SOCKET_URL;
@@ -41,6 +41,10 @@ export const connectSocket = (
   socket.on(
     "tracker:location_update",
     (data: { trackerId: string; location: TrackerLocation }) => {
+      console.log(
+        `Location update for tracker ${data.trackerId}:`,
+        data.location,
+      );
       onLocationUpdate(data.trackerId, data.location);
     },
   );
@@ -64,7 +68,7 @@ export const disconnectSocket = (): void => {
  */
 export const subscribeToTracker = (trackerId: string): void => {
   if (socket && socket.connected) {
-    socket.emit("subscribe:tracker", { trackerId });
+    socket.emit("subscribe", { trackerId });
   }
 };
 
@@ -74,6 +78,6 @@ export const subscribeToTracker = (trackerId: string): void => {
  */
 export const unsubscribeFromTracker = (trackerId: string): void => {
   if (socket && socket.connected) {
-    socket.emit("unsubscribe:tracker", { trackerId });
+    socket.emit("unsubscribe", { trackerId });
   }
 };

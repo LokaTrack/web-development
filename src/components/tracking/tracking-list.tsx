@@ -10,7 +10,7 @@ import {
   Typography,
   CircularProgress,
 } from "@mui/material";
-import { TrackersListProps } from "../../props/trackers";
+import { TrackerListProps } from "../../props/props";
 import { MyLocation } from "@mui/icons-material";
 
 // Just a custom styled component for the ListItem
@@ -66,7 +66,7 @@ const ListTrackerItem = styled(ListItem)<{ selected: boolean }>(
 interface TrackingListProps {
   isLoading: boolean;
   error: string | null;
-  trackersList: TrackersListProps[];
+  trackerList: TrackerListProps[];
   selectedTrackerId: string | null;
   onTrackerSelect: (trackerId: string) => void;
 }
@@ -74,7 +74,7 @@ interface TrackingListProps {
 export default function TrackingList({
   isLoading,
   error,
-  trackersList,
+  trackerList,
   selectedTrackerId,
   onTrackerSelect,
 }: TrackingListProps) {
@@ -89,13 +89,11 @@ export default function TrackingList({
         overflow: "hidden",
         boxShadow: "0 4px 20px rgba(0, 0, 0, 0.08)",
         justifyContent:
-          isLoading || error || trackersList.length === 0
+          isLoading || error || trackerList.length === 0
             ? "center"
             : "flex-start",
         alignItems:
-          isLoading || error || trackersList.length === 0
-            ? "center"
-            : "stretch",
+          isLoading || error || trackerList.length === 0 ? "center" : "stretch",
       }}
     >
       {error ? (
@@ -110,7 +108,7 @@ export default function TrackingList({
           <CircularProgress size={40} sx={{ color: "#2e7d32", mb: 2 }} />
           <Typography>Loading trackers...</Typography>
         </Box>
-      ) : trackersList.length === 0 ? (
+      ) : trackerList.length === 0 ? (
         <Box sx={{ textAlign: "center", p: 3 }}>
           <Typography>No trackers available.</Typography>
         </Box>
@@ -122,7 +120,7 @@ export default function TrackingList({
               padding: 0,
             }}
           >
-            {trackersList.map((tracker) => {
+            {trackerList.map((tracker) => {
               const isSelected = tracker.trackerId === selectedTrackerId;
 
               return (
@@ -158,7 +156,7 @@ export default function TrackingList({
                             color: isSelected ? "white" : "inherit",
                           }}
                         >
-                          {tracker.trackerName}
+                          {tracker.trackerData.trackerName}
                         </Typography>
                       </Box>
                     }

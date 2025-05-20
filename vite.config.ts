@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     origin: "",
     cors: {
-      origin: ["lokatrack.me", "http://localhost:8000"],
+      origin: ["https://lokatrack.me", "http://localhost:8000"],
     },
   },
 });
