@@ -93,6 +93,10 @@ export async function sendUserTrackerAssignment(
   setError(null);
   setIsLoading(true);
 
+  if (userId === null) {
+    userId = "null";
+  }
+
   console.log(`User ID: ${userId}`);
   console.log(`Tracker ID: ${trackerId}`);
   try {
@@ -100,9 +104,9 @@ export async function sendUserTrackerAssignment(
     const accessToken = import.meta.env.VITE_ACCESS_TOKEN;
 
     const response = await axios.put(
-      `${apiUrl}/admin/users/${userId}/tracker/`,
+      `${apiUrl}/admin/trackers/${trackerId}`,
       {
-        trackerId: trackerId,
+        userId,
       },
       {
         headers: {

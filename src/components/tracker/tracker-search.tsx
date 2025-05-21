@@ -17,8 +17,8 @@ export default function TrackerSearch({
   useEffect(() => {
     const filtered = trackerList.filter((tracker) =>
       tracker.trackerData.trackerName
-        .toLowerCase()
-        .includes(searchTerm.toLowerCase()),
+        ?.toLowerCase()
+        ?.includes(searchTerm.toLowerCase()),
     );
     setFilteredTrackerList(filtered);
   }, [searchTerm, trackerList, setFilteredTrackerList]);

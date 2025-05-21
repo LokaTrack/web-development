@@ -17,6 +17,7 @@ interface TrackerAssignProps {
   setError: React.Dispatch<React.SetStateAction<string | null>>;
   trackerList: TrackerListProps[];
   userList: UserListProps[];
+  onAssignmentChange?: () => void;
 }
 
 export default function TrackerAssign({
@@ -24,6 +25,7 @@ export default function TrackerAssign({
   setError,
   trackerList,
   userList,
+  onAssignmentChange,
 }: TrackerAssignProps) {
   const [selectedTrackerId, setSelectedTrackerId] = useState<string | null>(
     null,
@@ -37,12 +39,39 @@ export default function TrackerAssign({
     setSelectedTrackerId(null);
   };
 
-  const handleUserTrackerAssignment = (
+  const handleUserTrackerUnassignment = async (trackerId: string) => {
+    try {
+      await sendUserTrackerAssignment(null, trackerId, setIsLoading, setError);
+      handleCloseDialog();
+
+      if (onAssignmentChange) {
+        onAssignmentChange();
+      }
+    } catch (error) {
+      console.error("Error unassigning tracker:", error);
+    }
+  };
+
+  const handleUserTrackerAssignment = async (
     userId: string | null,
     trackerId: string,
   ) => {
-    sendUserTrackerAssignment(userId, trackerId, setIsLoading, setError);
-    handleCloseDialog();
+    try {
+      await sendUserTrackerAssignment(null, trackerId, setIsLoading, setError);
+      await sendUserTrackerAssignment(
+        userId,
+        trackerId,
+        setIsLoading,
+        setError,
+      );
+      handleCloseDialog();
+
+      if (onAssignmentChange) {
+        onAssignmentChange();
+      }
+    } catch (error) {
+      console.error("Error assigning tracker:", error);
+    }
   };
 
   return (
@@ -139,7 +168,7 @@ export default function TrackerAssign({
                       variant="outlined"
                       color="secondary"
                       onClick={() =>
-                        handleUserTrackerAssignment(null, tracker.trackerId)
+                        handleUserTrackerUnassignment(tracker.trackerId)
                       }
                     >
                       Unassigned

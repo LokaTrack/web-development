@@ -25,12 +25,17 @@ function Trackers() {
   useEffect(() => {
     const filtered = trackerList.filter((tracker) =>
       tracker.trackerData.trackerName
-        .toLowerCase()
-        .includes(searchTerm.toLowerCase()),
+        ?.toLowerCase()
+        ?.includes(searchTerm.toLowerCase()),
     );
     setFilteredTrackerList(filtered);
   }, [searchTerm, trackerList]);
 
+  // Refresh after tracker assignment
+  const handleAssignmentChange = () => {
+    fetchTrackerList(setTrackerList, setIsLoading, setError);
+    fetchUserList(setUserList, setIsLoading, setError);
+  };
 
   return (
     <Box
@@ -65,6 +70,36 @@ function Trackers() {
           </Typography>
         </Paper>
       </Box>
+      {error && (
+        <Paper
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            padding: 2,
+            backgroundColor: "#f8d7da",
+            color: "#721c24",
+            border: "1px solid #f5c6cb",
+            borderRadius: 1,
+            margin: 2,
+          }}
+        >
+          <Typography variant="body1">{error}</Typography>
+        </Paper>
+      )}
+      {isLoading && (
+        <Paper
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            padding: 2,
+            backgroundColor: "#e9f6e5",
+          }}
+        >
+          <Typography variant="body1">Loading...</Typography>
+        </Paper>
+      )}
       {/* Search Input */}
       <Box>
         <TrackerSearch
@@ -81,6 +116,7 @@ function Trackers() {
           userList={userList}
           setError={setError}
           setIsLoading={setIsLoading}
+          onAssignmentChange={handleAssignmentChange}
         />
       </Box>
     </Box>
