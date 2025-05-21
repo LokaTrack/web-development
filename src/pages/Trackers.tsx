@@ -31,6 +31,7 @@ function Trackers() {
     setFilteredTrackerList(filtered);
   }, [searchTerm, trackerList]);
 
+
   return (
     <Box
       sx={{
@@ -75,7 +76,12 @@ function Trackers() {
       </Box>
       {/* Tracker List */}
       <Box>
-        <TrackerAssign trackerList={filteredTrackerList} userList={userList} />
+        <TrackerAssign
+          trackerList={filteredTrackerList}
+          userList={userList}
+          setError={setError}
+          setIsLoading={setIsLoading}
+        />
       </Box>
     </Box>
   );

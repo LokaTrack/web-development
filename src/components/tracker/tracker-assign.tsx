@@ -10,24 +10,39 @@ import {
 } from "@mui/material";
 import { TrackerListProps, UserListProps } from "../../props/props";
 import { useState } from "react";
+import { sendUserTrackerAssignment } from "../../hooks/hooks";
 
 interface TrackerAssignProps {
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  setError: React.Dispatch<React.SetStateAction<string | null>>;
   trackerList: TrackerListProps[];
   userList: UserListProps[];
 }
 
 export default function TrackerAssign({
+  setIsLoading,
+  setError,
   trackerList,
   userList,
 }: TrackerAssignProps) {
-  const [openDialog, setOpenDialog] = useState(false);
+  const [selectedTrackerId, setSelectedTrackerId] = useState<string | null>(
+    null,
+  );
   const [userSearch, setUserSearch] = useState("");
 
-  const handleOpenDialog = () => {
-    setOpenDialog(true);
+  const handleOpenDialog = (trackerId: string) => {
+    setSelectedTrackerId(trackerId);
   };
   const handleCloseDialog = () => {
-    setOpenDialog(false);
+    setSelectedTrackerId(null);
+  };
+
+  const handleUserTrackerAssignment = (
+    userId: string | null,
+    trackerId: string,
+  ) => {
+    sendUserTrackerAssignment(userId, trackerId, setIsLoading, setError);
+    handleCloseDialog();
   };
 
   return (
@@ -35,7 +50,6 @@ export default function TrackerAssign({
       {trackerList.map((tracker) => (
         <Grid key={tracker.trackerId} size={4}>
           <Card
-            key={tracker.trackerId}
             sx={{
               display: "flex",
               flexDirection: "column",
@@ -45,7 +59,7 @@ export default function TrackerAssign({
             }}
           >
             <Grid container direction={"column"} spacing={2}>
-              <Grid key={tracker.trackerId}>
+              <Grid>
                 <Typography variant="h5">
                   {tracker.trackerData.trackerName}
                 </Typography>
@@ -54,19 +68,13 @@ export default function TrackerAssign({
                 </Typography>
               </Grid>
               <Divider sx={{ marginY: 1 }} />
-              <Grid
-                key={tracker.trackerId}
-                direction="column"
-                container
-                spacing={1}
-              >
+              <Grid direction="column" container spacing={1}>
                 <Typography variant="h6">Assigned to:</Typography>
                 <Grid container spacing={2} alignItems="center">
                   {(() => {
                     const assignedUser = userList.find(
                       (user) => user.userData.trackerId === tracker.trackerId,
                     );
-
                     return (
                       <Grid
                         container
@@ -89,10 +97,16 @@ export default function TrackerAssign({
                   })()}
                 </Grid>
               </Grid>
-              <Button variant="outlined" onClick={handleOpenDialog}>
+              <Button
+                variant="outlined"
+                onClick={() => handleOpenDialog(tracker.trackerId)}
+              >
                 Edit
               </Button>
-              <Dialog open={openDialog} onClose={handleCloseDialog}>
+              <Dialog
+                open={selectedTrackerId === tracker.trackerId}
+                onClose={handleCloseDialog}
+              >
                 <Grid
                   container
                   direction="column"
@@ -120,7 +134,14 @@ export default function TrackerAssign({
                       minHeight: 230,
                     }}
                   >
-                    <Button fullWidth variant="outlined" color="secondary">
+                    <Button
+                      fullWidth
+                      variant="outlined"
+                      color="secondary"
+                      onClick={() =>
+                        handleUserTrackerAssignment(null, tracker.trackerId)
+                      }
+                    >
                       Unassigned
                     </Button>
                     {userList
@@ -130,9 +151,11 @@ export default function TrackerAssign({
                           .includes(userSearch.toLowerCase()),
                       )
                       .slice(0, 3)
-                      .map((user) => (
+                      .map((user, index) => (
                         <Button
-                          key={user.userId}
+                          key={`user-${user.userId || index}-${
+                            tracker.trackerId
+                          }`}
                           fullWidth
                           variant="outlined"
                           startIcon={
@@ -141,6 +164,12 @@ export default function TrackerAssign({
                               src={user.userData.profilePictureUrl || ""}
                               sx={{ width: 28, height: 28 }}
                             />
+                          }
+                          onClick={() =>
+                            handleUserTrackerAssignment(
+                              user.userId || user.userData.userId,
+                              tracker.trackerId,
+                            )
                           }
                         >
                           {user.userData.username}
@@ -152,7 +181,7 @@ export default function TrackerAssign({
                     sx={{ mt: 2 }}
                     color="primary"
                   >
-                    Close
+                    Cancel
                   </Button>
                 </Grid>
               </Dialog>
