@@ -1,6 +1,6 @@
 import { Box, Paper, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
-import PackagesList from "../package/package-list";
+import PackagesList from "../components/package/package-list";
 import { PackageListProps, UserListProps } from "../props/props";
 import { fetchPackageList, fetchUserList } from "../hooks/hooks";
 

@@ -10,7 +10,7 @@ import {
   TablePagination,
   TableRow,
 } from "@mui/material";
-import { PackageListProps, UserListProps } from "../props/props";
+import { PackageListProps, UserListProps } from "../../props/props";
 import {
   Assignment,
   AssignmentReturn,
