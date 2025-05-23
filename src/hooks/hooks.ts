@@ -1,5 +1,9 @@
 import axios from "axios";
-import { TrackerListProps, UserListProps } from "../props/props";
+import {
+  PackageListProps,
+  TrackerListProps,
+  UserListProps,
+} from "../props/props";
 import React from "react";
 
 export async function fetchTrackerList(
@@ -130,6 +134,47 @@ export async function sendUserTrackerAssignment(
   } catch (err) {
     console.error("Error assigning tracker:", err);
     setError(err instanceof Error ? err.message : "Failed to assign tracker");
+
+    setIsLoading(false);
+  }
+}
+
+export async function fetchPackageList(
+  setPackageList: React.Dispatch<React.SetStateAction<PackageListProps[]>>,
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
+  setError: React.Dispatch<React.SetStateAction<string | null>>,
+) {
+  setError(null);
+  setIsLoading(true);
+
+  try {
+    const apiUrl = import.meta.env.VITE_API_URL;
+    const accessToken = import.meta.env.VITE_ACCESS_TOKEN;
+
+    const response = await axios.get(`${apiUrl}/delivery/all/delivery`, {
+      headers: {
+        Authorization: accessToken,
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (response.status === 200) {
+      const data = response.data;
+      if (data.status === "success" && data.data) {
+        setPackageList(data.data);
+      } else {
+        throw new Error(data.message || "Failed to get packages list");
+      }
+    } else {
+      throw new Error(`API request failed with status ${response.status}`);
+    }
+
+    setIsLoading(false);
+  } catch (err) {
+    console.error("Error fetching packages list:", err);
+    setError(
+      err instanceof Error ? err.message : "Failed to fetch packages list",
+    );
 
     setIsLoading(false);
   }

@@ -5,7 +5,7 @@ import { fetchTrackerList, fetchUserList } from "../hooks/hooks";
 import TrackerSearch from "../components/tracker/tracker-search";
 import TrackerAssign from "../components/tracker/tracker-assign";
 
-function Trackers() {
+export default function Trackers() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [trackerList, setTrackerList] = useState<TrackerListProps[]>([]);
@@ -122,5 +122,3 @@ function Trackers() {
     </Box>
   );
 }
-
-export default Trackers;
