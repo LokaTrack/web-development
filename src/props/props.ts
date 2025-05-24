@@ -44,3 +44,26 @@ export interface PackageListProps {
   trackerId: string;
   driverId: string;
 }
+
+export interface UserLoginProps {
+  userId: string;
+  email: string;
+  role: "admin" | "driver" | "inactive" | "pending";
+  username: string;
+  token: string;
+}
+
+export interface UserProfileProps {
+  isEmailVerified: boolean;
+  phoneNumber: string | null;
+  userId: string;
+  lastUpdate: string;
+  role: "admin" | "driver" | "inactive" | "pending";
+  registrationDate: string;
+  email: string;
+  username: string;
+  profilePictureUrl: string | null;
+  deiiveredPackages: number;
+  totalDeliveries: number;
+  percentage: number;
+}

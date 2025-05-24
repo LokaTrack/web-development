@@ -13,8 +13,12 @@ import { Box, Grid, Paper, Typography } from "@mui/material";
 import DashboardStatus from "../components/dashboard/dashboard-status";
 import DashboardDriverList from "../components/dashboard/dashboard-driver-list";
 import DashboardTrackerList from "../components/dashboard/dashboard-tracker-list";
+import { useAuthGuard } from "../hooks/useAuth";
 
 export default function Dashboard() {
+  // Authentication guard - redirects to login if not authenticated
+  useAuthGuard();
+
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [trackerList, setTrackerList] = useState<TrackerListProps[]>([]);

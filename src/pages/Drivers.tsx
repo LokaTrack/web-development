@@ -4,8 +4,10 @@ import { fetchTrackerList, fetchUserList } from "../hooks/hooks";
 import { Box, Paper, Typography } from "@mui/material";
 import DriversSearch from "../components/drivers/drivers-search";
 import DriversList from "../components/drivers/drivers-list";
+import { useAuthGuard } from "../hooks/useAuth";
 
 export default function Drivers() {
+  useAuthGuard();
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [trackerList, setTrackerList] = useState<TrackerListProps[]>([]);

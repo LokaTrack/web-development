@@ -26,7 +26,8 @@ import {
   AccountCircle as AccountCircleIcon,
   Logout as LogoutIcon,
 } from "@mui/icons-material";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { removeToken } from "./utils/authUtils";
 
 // Import the LokaTrack logo
 import logoImage from "./assets/images/lokatrack_logo_small.png";
@@ -41,6 +42,7 @@ export default function Layout({ children }: LayoutProps) {
   const [open, setOpen] = useState(true);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const location = useLocation();
+  const navigate = useNavigate();
   const profileMenuOpen = Boolean(anchorEl);
 
   useEffect(() => {
@@ -76,12 +78,14 @@ export default function Layout({ children }: LayoutProps) {
 
   const handleLogout = () => {
     handleProfileMenuClose();
-    // Add logout logic here
-    console.log("Logout clicked");
+    // Remove token from localStorage
+    removeToken();
+    // Redirect to login page
+    navigate("/login");
   };
 
   const menuItems = [
-    { text: "Dashboard", icon: <DashboardIcon />, path: "/dashboard" },
+    { text: "Dashboard", icon: <DashboardIcon />, path: "/" },
     {
       text: "Package Tracking",
       icon: <LocalShippingIcon />,
