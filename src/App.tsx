@@ -1,7 +1,7 @@
 import { BrowserRouter, useRoutes, useLocation } from "react-router-dom";
 import { ThemeProvider, CssBaseline } from "@mui/material";
 import theme from "./theme/theme";
-import Layout from "./components/layout";
+import Layout from "./layout";
 import routes from "./utils/routes";
 
 // Component that renders the current route with conditional layout
