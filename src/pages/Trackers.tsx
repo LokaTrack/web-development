@@ -42,8 +42,7 @@ export default function Trackers() {
       sx={{
         display: "flex",
         flexDirection: "column",
-        height: "calc(100vh - 136px)",
-        overflow: "hidden",
+        minHeight: "calc(100vh - 136px)",
         gap: 4,
       }}
     >
@@ -80,8 +79,8 @@ export default function Trackers() {
             backgroundColor: "#f8d7da",
             color: "#721c24",
             border: "1px solid #f5c6cb",
-            borderRadius: 1,
             margin: 2,
+            borderRadius: 1,
           }}
         >
           <Typography variant="body1">{error}</Typography>

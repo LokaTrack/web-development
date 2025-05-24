@@ -30,7 +30,7 @@ export interface UserListProps {
 
 export interface PackageListProps {
   orderNo: string;
-  deliveryStatus: string;
+  deliveryStatus: "On Delivery" | "Check-in" | "Check-out" | "Return";
   lastUpdateTime: string;
   totalWeight: number;
   checkOutTime: string;

@@ -1,4 +1,3 @@
-import { useState } from "react";
 import {
   Chip,
   Paper,
@@ -10,15 +9,16 @@ import {
   TablePagination,
   TableRow,
 } from "@mui/material";
-import { PackageListProps, UserListProps } from "../props/props";
+import { PackageListProps, UserListProps } from "../../props/props";
 import {
   Assignment,
   AssignmentReturn,
   AssignmentTurnedIn,
   LocalShipping,
 } from "@mui/icons-material";
+import { useState } from "react";
 
-interface PackageListPageProps {
+interface DashboardDriverListPageProps {
   packageList: PackageListProps[];
   userList: UserListProps[];
 }
@@ -66,10 +66,10 @@ function statusChip(status: string) {
   }
 }
 
-export default function PackagesList({
+export default function DashboardDriverList({
   packageList,
   userList,
-}: PackageListPageProps) {
+}: DashboardDriverListPageProps) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
@@ -92,31 +92,25 @@ export default function PackagesList({
 
   return (
     // <TableContainer component={Paper} sx={{ maxHeight: "calc(100vh - 136px)" }}>
-    <Paper>
-      <TableContainer>
-        <Table
-          sx={{ width: "100%", tableLayout: "fixed" }}
-          aria-label="sticky table"
-          stickyHeader
-        >
+    <Paper sx={{ overflow: "hidden" }}>
+      <TableContainer sx={{ maxHeight: 850, overflowX: "auto" }}>
+        <Table sx={{ minWidth: 850 }} aria-label="sticky table" stickyHeader>
           <TableHead>
             <TableRow>
-              <TableCell sx={{ width: "12%" }}>PACKAGE ID</TableCell>
-              <TableCell align="right" sx={{ width: "13%" }}>
+              <TableCell sx={{ minWidth: 180 }}>PACKAGE ID</TableCell>
+              <TableCell align="right" sx={{ minWidth: 180 }}>
                 RECIPIENT
               </TableCell>
-              <TableCell align="right" sx={{ width: "17%" }}>
+              <TableCell align="right" sx={{ minWidth: 180 }}>
                 STATUS
               </TableCell>
-              <TableCell align="right" sx={{ width: "13%" }}>
+              <TableCell align="right" sx={{ minWidth: 180 }}>
                 DRIVER
               </TableCell>
-              <TableCell align="right" sx={{ width: "15%" }}>
+              <TableCell align="right" sx={{ minWidth: 200 }}>
                 DATE & TIME
               </TableCell>
-              <TableCell align="right" sx={{ width: "30%" }}>
-                LOCATION
-              </TableCell>
+              <TableCell align="right">LOCATION</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -131,48 +125,32 @@ export default function PackagesList({
                   component={"th"}
                   scope="row"
                   sx={{
-                    width: "12%",
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
                     whiteSpace: "nowrap",
                   }}
-                  height={"96px"}
                 >
                   {pkg.orderNo}
                 </TableCell>
                 <TableCell
                   align="right"
                   sx={{
-                    width: "13%",
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
                     whiteSpace: "nowrap",
                   }}
-                  height={"96px"}
                 >
                   {pkg.customer}
                 </TableCell>
                 <TableCell
                   align="right"
                   sx={{
-                    width: "17%",
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
                     whiteSpace: "nowrap",
                   }}
-                  height={"96px"}
                 >
                   {statusChip(pkg.deliveryStatus)}
                 </TableCell>
                 <TableCell
                   align="right"
                   sx={{
-                    width: "13%",
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
                     whiteSpace: "nowrap",
                   }}
-                  height={"96px"}
                 >
                   {userList.find((user) => user.userId === pkg.driverId)
                     ? userList.find((user) => user.userId === pkg.driverId)
@@ -182,12 +160,8 @@ export default function PackagesList({
                 <TableCell
                   align="right"
                   sx={{
-                    width: "15%",
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
                     whiteSpace: "nowrap",
                   }}
-                  height={"96px"}
                 >
                   {new Date(pkg.deliveryStartTime)
                     .toLocaleString("en-GB", {
@@ -207,10 +181,8 @@ export default function PackagesList({
                 <TableCell
                   align="right"
                   sx={{
-                    width: "30%",
-                    overflow: "hidden",
+                    whiteSpace: "nowrap",
                   }}
-                  height={"96px"}
                 >
                   {pkg.address}
                 </TableCell>
