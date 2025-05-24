@@ -4,24 +4,11 @@ FROM oven/bun:1.2.13-alpine AS base
 # Set working directory
 WORKDIR /app
 
-# Define build arguments for environment variables
-ARG VITE_ACCESS_TOKEN=""
-ARG VITE_API_URL="https://lokatrack.me/api/v1"
-ARG VITE_SOCKET_URL="https://lokatrack.me"
-
 # Copy package.json and bun.lock for dependency installation
 COPY package.json bun.lock ./
 
 # Install dependencies
 RUN bun install --frozen-lockfile
-
-# Create .env file from build arguments (always create to ensure it exists)
-RUN echo "VITE_ACCESS_TOKEN=${VITE_ACCESS_TOKEN}" > .env && \
-    echo "VITE_API_URL=${VITE_API_URL}" >> .env && \
-    echo "VITE_SOCKET_URL=${VITE_SOCKET_URL}" >> .env
-
-# Copy local .env file if it exists (this will override the generated one)
-COPY .env* ./
 
 # Copy the rest of the application code
 COPY . .
