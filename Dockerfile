@@ -25,12 +25,8 @@ COPY --from=base /app/dist /usr/share/nginx/html
 # Copy custom nginx configuration
 COPY nginx.conf /etc/nginx/nginx.conf
 
-# Copy the setup script to the production stage
-COPY docker-setup.sh /docker-setup.sh
-RUN chmod +x /docker-setup.sh
-
 # Expose port 80
 EXPOSE 80
 
-# Use our setup script as the entry point
-CMD ["/docker-setup.sh"]
+# Start nginx
+CMD ["nginx", "-g", "daemon off;"]
