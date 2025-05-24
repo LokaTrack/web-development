@@ -11,7 +11,7 @@ export default function DashboardTrackerList({
   userList,
 }: DashboardTrackerListPageProps) {
   return (
-    <Paper>
+    <Paper sx={{ width: "100%" }}>
       <List sx={{ width: "100%" }}>
         {trackerList.map((tracker) => {
           const assignedUser = userList.find(

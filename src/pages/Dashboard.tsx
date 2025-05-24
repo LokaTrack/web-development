@@ -50,10 +50,11 @@ export default function Dashboard() {
           }}
         >
           <Typography variant="h2" sx={{ color: "#254e1c" }}>
-            Package Management
+            Dashboard Overview
           </Typography>
           <Typography>
-            Packages monitoring and management system for your trackers.
+            Monitor and manage your delivery operations with real-time tracking,
+            driver assignments, and package status updates.
           </Typography>
         </Paper>
       </Box>
@@ -100,13 +101,13 @@ export default function Dashboard() {
       {/* Dashboard Driver List */}
       <Box>
         <Grid container spacing={2} direction={"row"}>
-          <Grid size={8} container>
+          <Grid size={9} container>
             <DashboardDriverList
               packageList={packageList}
               userList={userList}
             />
           </Grid>
-          <Grid size={4} container>
+          <Grid size={3} container>
             <DashboardTrackerList
               trackerList={trackerList}
               userList={userList}
