@@ -20,9 +20,6 @@ RUN echo "VITE_ACCESS_TOKEN=${VITE_ACCESS_TOKEN}" > .env && \
     echo "VITE_API_URL=${VITE_API_URL}" >> .env && \
     echo "VITE_SOCKET_URL=${VITE_SOCKET_URL}" >> .env
 
-# Copy local .env file if it exists (this will override the generated one)
-COPY .env* ./
-
 # Copy the rest of the application code
 COPY . .
 
