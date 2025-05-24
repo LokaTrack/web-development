@@ -33,12 +33,6 @@ export function getAuthHeaders(): { [key: string]: string } {
 
   if (token) {
     headers.Authorization = `Bearer ${token}`;
-  } else {
-    // Fallback to environment token if no user token exists
-    const envToken = import.meta.env.VITE_ACCESS_TOKEN;
-    if (envToken) {
-      headers.Authorization = envToken;
-    }
   }
 
   return headers;
