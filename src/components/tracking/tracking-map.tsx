@@ -4,6 +4,7 @@ import { TrackerLocation } from "../../props/props";
 import { Typography, CircularProgress } from "@mui/material";
 import { useEffect } from "react";
 import "leaflet/dist/leaflet.css";
+import "../../utils/leafletIcons"; // Import the Leaflet icon configuration
 
 // Handle map updates when the location changes
 function MapUpdater({ location }: { location: TrackerLocation }) {

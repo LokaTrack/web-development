@@ -29,7 +29,7 @@ import {
 import { Link, useLocation } from "react-router-dom";
 
 // Import the LokaTrack logo
-import logoImage from "/src/assets/images/lokatrack_logo_small.png";
+import logoImage from "./assets/images/lokatrack_logo_small.png";
 
 const drawerWidth = 240;
 

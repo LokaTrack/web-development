@@ -13,6 +13,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+import lokatrackLogo from "../../assets/images/lokatrack_logo.png";
 
 export default function LoginDetails() {
   return (
@@ -26,7 +27,7 @@ export default function LoginDetails() {
     >
       <Box sx={{ alignItems: "start", mb: 2 }}>
         <img
-          src="/src/assets/images/lokatrack_logo.png"
+          src={lokatrackLogo}
           alt="LokaTrack Logo"
           style={{
             height: "80px",
