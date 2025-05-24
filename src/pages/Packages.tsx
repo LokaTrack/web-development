@@ -3,8 +3,10 @@ import { useEffect, useState } from "react";
 import PackagesList from "../components/package/package-list";
 import { PackageListProps, UserListProps } from "../props/props";
 import { fetchPackageList, fetchUserList } from "../hooks/hooks";
+import { useAuthGuard } from "../hooks/useAuth";
 
 export default function Packages() {
+  useAuthGuard();
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [packageList, setPackageList] = useState<PackageListProps[]>([]);

@@ -4,8 +4,12 @@ import { TrackerListProps, UserListProps } from "../props/props";
 import { fetchTrackerList, fetchUserList } from "../hooks/hooks";
 import TrackerSearch from "../components/tracker/tracker-search";
 import TrackerAssign from "../components/tracker/tracker-assign";
+import { useAuthGuard } from "../hooks/useAuth";
 
 export default function Trackers() {
+  // Authentication guard - redirects to login if not authenticated
+  useAuthGuard();
+
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [trackerList, setTrackerList] = useState<TrackerListProps[]>([]);

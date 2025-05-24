@@ -10,8 +10,12 @@ import {
   subscribeToTracker,
   unsubscribeFromTracker,
 } from "../socket";
+import { useAuthGuard } from "../hooks/useAuth";
 
 export default function Tracking() {
+  // Authentication guard - redirects to login if not authenticated
+  useAuthGuard();
+
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [trackerList, setTrackerList] = useState<TrackerListProps[]>([]);

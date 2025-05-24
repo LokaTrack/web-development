@@ -9,7 +9,7 @@ import Login from "../pages/Login";
 const routes: RouteObject[] = [
   {
     path: "/",
-    element: <Login />,
+    element: <Dashboard />,
   },
   {
     path: "/login",

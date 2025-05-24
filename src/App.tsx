@@ -7,8 +7,7 @@ import routes from "./utils/routes";
 // Component that renders the current route with conditional layout
 const AppRoutes = () => {
   const location = useLocation();
-  const isLoginPage =
-    location.pathname === "/" || location.pathname === "/login";
+  const isLoginPage = location.pathname === "/login";
   const element = useRoutes(routes);
 
   return isLoginPage ? element : <Layout>{element}</Layout>;
