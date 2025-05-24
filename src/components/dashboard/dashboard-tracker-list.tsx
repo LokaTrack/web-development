@@ -1,4 +1,11 @@
-import { Divider, List, ListItem, ListItemText, Paper } from "@mui/material";
+import {
+  Box,
+  Divider,
+  List,
+  ListItem,
+  ListItemText,
+  Paper,
+} from "@mui/material";
 import { TrackerListProps, UserListProps } from "../../props/props";
 
 interface DashboardTrackerListPageProps {
@@ -13,13 +20,13 @@ export default function DashboardTrackerList({
   return (
     <Paper sx={{ width: "100%" }}>
       <List sx={{ width: "100%" }}>
-        {trackerList.map((tracker) => {
+        {trackerList.map((tracker, index) => {
           const assignedUser = userList.find(
             (user) => user.userData.trackerId === tracker.trackerId,
           );
           return (
-            <>
-              <ListItem key={tracker.trackerId}>
+            <Box key={tracker.trackerId}>
+              <ListItem>
                 <ListItemText
                   primary={tracker.trackerData.trackerName}
                   secondary={
@@ -27,8 +34,8 @@ export default function DashboardTrackerList({
                   }
                 />
               </ListItem>
-              <Divider />
-            </>
+              {index < trackerList.length - 1 && <Divider />}
+            </Box>
           );
         })}
       </List>

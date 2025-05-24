@@ -70,7 +70,9 @@ const theme = createTheme({
     text: colors.text,
   },
   typography: {
-    fontFamily: '"Poppins", "Roboto", "Helvetica", "Arial", sans-serif',
+    fontFamily:
+      '"Inter Variable", "Inter", "Roboto", "Poppins", "Helvetica", "Arial", sans-serif',
+    // '"Roboto", "Inter Variable", "Inter", "Poppins", "Helvetica", "Arial", sans-serif',
     h1: {
       fontWeight: 700,
       fontSize: "2.5rem",

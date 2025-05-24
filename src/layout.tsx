@@ -12,6 +12,8 @@ import {
   ListItemText,
   Divider,
   Box,
+  Menu,
+  MenuItem,
 } from "@mui/material";
 import {
   Menu as MenuIcon,
@@ -22,11 +24,12 @@ import {
   People as PeopleIcon,
   MapOutlined,
   AccountCircle as AccountCircleIcon,
+  Logout as LogoutIcon,
 } from "@mui/icons-material";
 import { Link, useLocation } from "react-router-dom";
 
 // Import the LokaTrack logo
-import logoImage from "../assets/images/lokatrack_logo_small.png";
+import logoImage from "/src/assets/images/lokatrack_logo_small.png";
 
 const drawerWidth = 240;
 
@@ -36,7 +39,9 @@ interface LayoutProps {
 
 export default function Layout({ children }: LayoutProps) {
   const [open, setOpen] = useState(true);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const location = useLocation();
+  const profileMenuOpen = Boolean(anchorEl);
 
   useEffect(() => {
     const handleResize = () => {
@@ -59,6 +64,20 @@ export default function Layout({ children }: LayoutProps) {
 
   const handleDrawerClose = () => {
     setOpen(false);
+  };
+
+  const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleProfileMenuClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleLogout = () => {
+    handleProfileMenuClose();
+    // Add logout logic here
+    console.log("Logout clicked");
   };
 
   const menuItems = [
@@ -92,7 +111,17 @@ export default function Layout({ children }: LayoutProps) {
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerOpen}
-            sx={{ mr: 2, display: { sm: open ? "none" : "block" } }}
+            sx={{
+              mr: 2,
+              opacity: { sm: open ? 0 : 1 },
+              transform: { sm: open ? "scale(0.8)" : "scale(1)" },
+              transition: (theme) =>
+                theme.transitions.create(["opacity", "transform"], {
+                  easing: theme.transitions.easing.sharp,
+                  duration: theme.transitions.duration.enteringScreen,
+                }),
+              pointerEvents: { sm: open ? "none" : "auto" },
+            }}
           >
             <MenuIcon />
           </IconButton>
@@ -121,9 +150,41 @@ export default function Layout({ children }: LayoutProps) {
             </Typography>
           </Box>
 
-          <IconButton color="inherit" sx={{ ml: 1 }}>
+          <IconButton
+            color="inherit"
+            sx={{ ml: 1 }}
+            onClick={handleProfileMenuOpen}
+            aria-controls={profileMenuOpen ? "profile-menu" : undefined}
+            aria-haspopup="true"
+            aria-expanded={profileMenuOpen ? "true" : undefined}
+          >
             <AccountCircleIcon />
           </IconButton>
+
+          <Menu
+            id="profile-menu"
+            anchorEl={anchorEl}
+            open={profileMenuOpen}
+            onClose={handleProfileMenuClose}
+            MenuListProps={{
+              "aria-labelledby": "profile-button",
+            }}
+            sx={{
+              mt: 1.5,
+              "& .MuiPaper-root": {
+                borderRadius: 2,
+                minWidth: 180,
+                boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.1)",
+              },
+            }}
+          >
+            <MenuItem onClick={handleLogout}>
+              <ListItemIcon>
+                <LogoutIcon fontSize="small" />
+              </ListItemIcon>
+              <ListItemText>Logout</ListItemText>
+            </MenuItem>
+          </Menu>
         </Toolbar>
       </AppBar>
 
