@@ -118,14 +118,17 @@ export async function fetchPackageList(
     const apiUrl = import.meta.env.VITE_API_URL;
     const headers = getAuthHeaders();
 
-    const response = await axios.get(`${apiUrl}/delivery/all/delivery`, {
-      headers,
-    });
+    const response = await axios.get(
+      `${apiUrl}/admin/deliveries?limit=100&offset=0`,
+      {
+        headers,
+      },
+    );
 
     if (response.status === 200) {
       const data = response.data;
       if (data.status === "success" && data.data) {
-        setPackageList(data.data);
+        setPackageList(data.data.deliveries);
       } else {
         throw new Error(data.message || "Failed to get packages list");
       }

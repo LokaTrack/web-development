@@ -42,9 +42,12 @@ export default function Tracking() {
       trackerId: string,
       location: TrackerLocation,
     ) => {
+      console.log(`Updating location for tracker ${trackerId}:`, location);
       setTrackerList((currentList) =>
         currentList.map((tracker) =>
-          tracker.trackerId === trackerId ? { ...tracker, location } : tracker,
+          tracker.trackerId === trackerId
+            ? { ...tracker, trackerData: { ...tracker.trackerData, location } }
+            : tracker,
         ),
       );
     };
@@ -81,7 +84,13 @@ export default function Tracking() {
   const selectedTracker = trackerList.find(
     (tracker) => tracker.trackerId === selectedTrackerId,
   );
+  // Priority: Use real-time socket location first, fallback to initial data
   const trackerLocation = selectedTracker?.trackerData.location || null;
+
+  // Debug: Log when trackerLocation changes
+  useEffect(() => {
+    console.log("TrackerLocation updated:", trackerLocation);
+  }, [trackerLocation]);
 
   return (
     <Box
