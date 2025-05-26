@@ -14,11 +14,11 @@ type LocationUpdateCallback = (
 
 /**
  * Connect to the socket server and set up event listeners
- * @param onLocationUpdate Callback function when a tracker's location is updated
+ * @param handleLocationUpdate Callback function when a tracker's location is updated
  * @returns The socket instance
  */
 export const connectSocket = (
-  onLocationUpdate: LocationUpdateCallback,
+  handleLocationUpdate: LocationUpdateCallback,
 ): Socket => {
   // If socket exists and is connected, return it
   if (socket && socket.connected) {
@@ -41,11 +41,7 @@ export const connectSocket = (
   socket.on(
     "tracker:location_update",
     (data: { trackerId: string; location: TrackerLocation }) => {
-      console.log(
-        `Location update for tracker ${data.trackerId}:`,
-        data.location,
-      );
-      onLocationUpdate(data.trackerId, data.location);
+      handleLocationUpdate(data.trackerId, data.location);
     },
   );
 
