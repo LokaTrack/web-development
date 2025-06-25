@@ -59,30 +59,30 @@ LokaTrack is a comprehensive logistics tracking system that provides real-time m
 
 ### 🏠 Dashboard
 
-![Dashboard](https://drive.google.com/file/d/1TbwuZLL3Tcl7_MKRDIbF3NhexNHbxSTq/view?usp=drive_link)
+<img src="https://drive.google.com/uc?export=view&id=1TbwuZLL3Tcl7_MKRDIbF3NhexNHbxSTq" alt="Dashboard" width="800" />
 
 The dashboard provides a comprehensive overview of the entire logistics operation. It displays key metrics, active drivers status, available tracking devices, and real-time system statistics. This central hub allows administrators to quickly assess the current state of all operations at a glance.
 
 ### 📦 Package Tracking
 
-![Package Tracking](https://drive.google.com/file/d/1dZZnJk3xd1BgQNrThznq3xLJK2XTjgZk/view?usp=drive_link)
+<img src="https://drive.google.com/uc?export=view&id=1dZZnJk3xd1BgQNrThznq3xLJK2XTjgZk" alt="Package Tracking" width="800" />
 
 The package tracking page allows users to monitor and manage all shipments in the system. Users can view package details, delivery status, and track the complete journey of each package from origin to destination.
 
 ### 🗺️ Live Tracking
 
-![Live Tracking](https://drive.google.com/file/d/1V4a-8boQahdQqh01IVNuqubqFflKjPPp/view?usp=drive_link)
+<img src="https://drive.google.com/uc?export=view&id=1V4a-8boQahdQqh01IVNuqubqFflKjPPp" alt="Live Tracking" width="800" />
 
 The live tracking interface provides real-time location monitoring on an interactive map. This page displays the current positions of all active drivers and vehicles, allowing for immediate visibility into fleet movements and enabling quick response to any operational needs.
 
 ### 📡 Tracker Management
 
-![Tracker Management](https://drive.google.com/file/d/1putcAdS-4GaMM1cDccoc9KF-d-94A1sm/view?usp=drive_link)
+<img src="https://drive.google.com/uc?export=view&id=1putcAdS-4GaMM1cDccoc9KF-d-94A1sm" alt="Tracker Management" width="800" />
 
 The tracker management page handles the administration of all GPS tracking devices. Users can view device status, assign trackers to vehicles or packages, monitor device health, and configure tracking parameters to ensure optimal monitoring coverage.
 
 ### 👨‍💼 Driver Management
 
-![Driver Management](https://drive.google.com/file/d/1qUcvWjLcrhpxQYKf7YrMvyP0q896XYBX/view?usp=drive_link)
+<img src="https://drive.google.com/uc?export=view&id=1qUcvWjLcrhpxQYKf7YrMvyP0q896XYBX" alt="Driver Management" width="800" />
 
 The driver management interface provides complete control over driver profiles and assignments. Administrators can view driver information and monitor their current status.
